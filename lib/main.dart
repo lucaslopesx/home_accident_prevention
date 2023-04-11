@@ -1,21 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_accident_prevention/menu/menu.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const HomePage();
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'menu',
+          builder: (BuildContext context, GoRouterState state) {
+            return const MenuOptionsScreen();
+          },
+        ),
+      ],
+    ),
+  ],
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
+    return MaterialApp.router(
+      routerConfig: _router,
     );
   }
 }
@@ -74,7 +91,7 @@ class HomePage extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
                 ),
               ),
-              onPressed: () => {},
+              onPressed: () => {context.go('/menu')},
               child: Text(
                 "VAMOS NESSA!",
                 textAlign: TextAlign.center,
